@@ -1,0 +1,93 @@
+#################Apache Installation from sources######################################
+echo "Hello Am going to install Apache that will take few minutes and after successfull installation you 
+
+will see text based web page"
+#Lets Configure Apache latest version 2.4.12
+# before that we will create a new directory at desktop
+cd ~
+mkdir sources
+cd sources
+#Download the source files for apache and dependences
+
+#Download the apache latest verstion from apache site.
+wget http://ftp.piotrkosoft.net/pub/mirrors/ftp.apache.org//httpd/httpd-2.4.12.tar.gz
+
+#Download the apache dependences apr(Apache Portable run time), apr util and Pcre from their respected sites
+#APR
+wget http://ftp.ps.pl/pub/apache//apr/apr-1.5.1.tar.gz
+
+#Apr-Util
+wget http://ftp.ps.pl/pub/apache//apr/apr-util-1.5.4.tar.gz
+
+#Pcre(Perl Compitable Regular expressions)
+wget http://ftp.exim.llorien.org/pcre/pcre-8.34.tar.gz
+
+#All tar files has downloaded at cd ~sources
+#lets untar apache and send to tmp directory.
+tar -zxvf httpd-2.4.12.tar.gz -C /tmp/
+
+#lets untar remaining apache dependences........
+tar -zxvf apr-1.5.1.tar.gz
+tar -zxvf apr-util-1.5.4.tar.gz
+tar -zxvf pcre-8.34.tar.gz
+
+#Move the dependences to apache srclib directory it will use while compiling apache before installation.
+mv apr-1.5.1 /tmp/httpd-2.4.12/srclib/apr
+mv apr-util-1.5.4 /tmp/httpd-2.4.12/srclib/apr-util
+
+#Go to pcre directory and configure first and that will have pcre-configure file in pcre/bin.
+cd pcre-8.34
+./configure --prefix=/tmp/pcre
+make
+make install
+
+#lets go to tep/httpd directory to install apache latest version
+cd /tmp/httpd-2.4.12
+./configure --prefix=/tmp/apache --with-included-apr --with-pcre=/tmp/pcre/bin/pcre-config
+make
+make install
+
+#After apache installation lets start apache
+
+#go to directory
+
+cd /tmp/apache
+cd bin
+#start apache
+./apachectl -k start
+
+#lets create a directory to include index.html
+mkdir /var/www/test/
+
+#give access to all users for created directory
+chmod +x /var/www/test
+cd /var/www/test
+touch index.html
+
+#this is html page will disply if apache configured properly
+
+echo -e "<html>\n<body bgcolor="#E6E6FA">\n<h1 align="center" style="color:blue">WELCOME TO PROKARMA</h1>
+
+\n</body>\n<b><i><marquee> Apache Configured Successfully</marquee><i></b>\n</html>" >> index.html
+
+
+#wait this will add virtual host conf to apache config file
+cd /tmp/apache/conf/
+echo -e "<VirtualHost *:80>\n    ServerName www.mahima.com\n    DocumentRoot /var/www/test\n    <Directory 
+
+/var/www/test>\n     AllowOverride All\n     Require all granted\n   </Directory>\n</VirtualHost>" 
+
+>>httpd.conf
+
+#Create a servername in your local hosts /etc/hosts 
+echo -e "10.5.2.121     www.mahima.com" >> /etc/hosts
+cd ..
+cd bin
+#stop apache.
+./apachectl -k stop
+
+#Start apache to have modified changes in conf file.
+./apachectl -k start
+
+#lets open the server which we created
+links www.mahima.com
