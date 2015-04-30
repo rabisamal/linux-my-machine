@@ -2,7 +2,7 @@
   cd re
   cd repo/
   ll
-  git clone https://SUTHARI:mahesh678@github.com/SUTHARI/linux-my-machine
+  git clone https://github.com/SUTHARI/linux-my-machine
   ll
   cd linux-my-machine/
   ll
