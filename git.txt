@@ -1,0 +1,13 @@
+ mkdir repo
+  cd re
+  cd repo/
+  ll
+  git clone https://SUTHARI:mahesh678@github.com/SUTHARI/linux-my-machine
+  ll
+  cd linux-my-machine/
+  ll
+  vi testfile
+  git status
+  git add testfile
+  git commit -m "testing"
+  git push origin master
