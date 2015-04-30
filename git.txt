@@ -11,3 +11,41 @@
   git add testfile
   git commit -m "testing"
   git push origin master
+#create a branch .......
+
+root@localhost linux-my-machine]# git checkout -b rabi
+Switched to a new branch 'rabi'
+[root@localhost linux-my-machine]# git status
+# On branch rabi
+nothing to commit (working directory clean)
+[root@localhost linux-my-machine]# mkdir r1 r2 r3
+[root@localhost linux-my-machine]# ll
+total 24
+-rw-r--r--. 1 root root 2875 Apr 30 17:45 apacheconfig
+-rw-r--r--. 1 root root  222 Apr 30 17:52 git.txt
+drwxr-xr-x. 2 root root 4096 Apr 30 19:18 r1
+drwxr-xr-x. 2 root root 4096 Apr 30 19:18 r2
+drwxr-xr-x. 2 root root 4096 Apr 30 19:18 r3
+-rw-r--r--. 1 root root   46 Apr 30 17:45 README.md
+[root@localhost linux-my-machine]# git add .
+[root@localhost linux-my-machine]# git commit -m "test"
+# On branch rabi
+nothing to commit (working directory clean)
+[root@localhost linux-my-machine]# git push
+Everything up-to-date
+[root@localhost linux-my-machine]# git status
+# On branch rabi
+nothing to commit (working directory clean)
+[root@localhost linux-my-machine]# touch r1/f1
+[root@localhost linux-my-machine]# git status
+# On branch rabi
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       r1/
+nothing added to commit but untracked files present (use "git add" to track)
+[root@localhost linux-my-machine]# git add r1/
+[root@localhost linux-my-machine]# git status
+# On branch rabi
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
