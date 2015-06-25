@@ -1,0 +1,25 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.define "nodea" do |nodea|
+     nodea.vm.box = "ubuntu32"
+     nodea.vm.box = "puppetlabs/ubuntu-12.04-32-puppet"
+     nodea.vm.network :private_network, type: "dhcp"
+     nodea.vm.hostname = "puppet2"
+  end
+
+#  config.vm.define "nodeb" do |nodeb|
+#     nodeb.vm.box = "puppetlabs/ubuntu-12.04-32-puppet"
+#      nodeb.vm.network :private_network, type: "dhcp"
+#      nodeb.vm.hostname = "puppet1"
+#  end   # Here we can add more multiple machines
+config.vm.synced_folder './', '/etc/puppet/modules'
+config.vm.provision :puppet do |puppet|
+puppet.manifests_path = "manifests"
+puppet.manifest_file  = "init.pp"
+puppet.options="--verbose --debug"
+end
+end
+
+

@@ -1,0 +1,17 @@
+<VirtualHost *:<%= @listenport %>>
+
+        <Proxy *>
+          Order deny,allow
+          Allow from all
+        </Proxy>
+         SSLProxyEngine On
+#        RequestHeader set Front-End-Https "On"
+#This directive sets whether the remote server certificate's CN field is compared against the hostname of the request URL.If both are unequal a 502 status code is sent
+#        SSLProxyCheckPeerCN on
+#This directive sets whether it is checked if the remote server certificate is expired or not. If the check fails a 502 status code (Bad Gateway) is sent
+        SSLProxyCheckPeerExpire on
+        ProxyPass / https://<%= @ipadr %>:<%= @proxyport %>/ retry=0
+        ProxyPassReverse / https://<%= @ipadr %>:<%= @proxyport %>/
+        ProxyPreserveHost on
+
+      </VirtualHost>
