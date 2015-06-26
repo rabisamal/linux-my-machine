@@ -1,0 +1,11 @@
+<VirtualHost *:<%= @listenport %>>
+
+        <Proxy *>
+          Order deny,allow
+          Allow from all
+        </Proxy>
+#This directive sets whether it is checked if the remote server certificate is expired or not. If the check fails a 502 status code (Bad Gateway) is sent
+        ProxyPass / http://<%= @ipadr %>:<%= @proxyport %>/ retry=0
+        ProxyPassReverse / http://<%= @ipadr %>:<%= @proxyport %>/
+        ProxyPreserveHost on
+      </VirtualHost>

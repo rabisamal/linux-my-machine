@@ -1,0 +1,17 @@
+Listen <%= @sslport %>
+NameVirtualHost *:<%= @sslport %>
+<VirtualHost *:<%= @sslport %>>
+ <Proxy *>
+          Order deny,allow
+          Allow from all
+        </Proxy>
+	SSLEngine on
+        SSLCertificateFile /etc/httpd/certs/puppet.suthari.com.crt
+        SSLCertificateKeyFile /etc/httpd/certs/puppet.suthari.com.key
+        SSLProxyEngine On
+        SSLProxyCheckPeerExpire on
+	ProxyPass / https://<%= @ipadr %>:<%= @sslproxyport %>/ retry=0
+        ProxyPassReverse / https:///<%= @ipadr %>:<%= @sslproxyport %>/
+        proxyPreserveHost on
+      </VirtualHost>
+
